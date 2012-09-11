@@ -14,21 +14,22 @@ package mundovirtual.model
 		
 		public function MV() 
 		{
-			environment = new MVEnvironment();			
-			lab = new MVEnvironment();
+			environment = new MVEnvironment(15, 13);			
+			lab = new MVEnvironment(7, 7);
 		}
 		
 		public function createAgents():void {
 			
-			for (var i:int = 0; i < 30; i++) 
-			{
-			var a:MVAgent = new MVAgent().randomizeProperties();			
-			var f:Point = findFreePosition()
+			for (var i:int = 0; i < 30; i++) 	{
+				var a:MVAgent = new MVAgent().randomizeProperties();			
+				var f:Point = findFreePosition()			
 			
-			environment.addAgent(a, f.x, f.y);
-			//a.velocity += Math.random() * 3
+				if (i < 25) {
+					environment.addAgent(a, f.x, f.y);
+				} else {
+					lab.addAgent(a, f.x, f.y);
+				}
 			}
-
 			
 		}
 		

@@ -2,7 +2,7 @@ package mundovirtual.model
 {
 	import cepa.multiagent.agent.AgentEvent;
 	import cepa.multiagent.environment.Environment;
-	
+		
 	/**
 	 * ...
 	 * @author Arthur
@@ -16,9 +16,10 @@ package mundovirtual.model
 		
 		
 		
-		public function MVEnvironment() 
+		public function MVEnvironment(w:int, h:int) 
 		{
-			
+				this.width = w;
+				this.height = h;
 		}
 		
 		public function addAgent(ag:MVAgent, iniX:int, iniY:int):void {

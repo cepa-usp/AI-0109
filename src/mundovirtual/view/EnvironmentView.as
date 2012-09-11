@@ -7,6 +7,7 @@ package mundovirtual.view
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
+	import flash.system.ImageDecodingPolicy;
 	import flash.utils.Dictionary;
 	import mundovirtual.model.MVAgent;
 	import mundovirtual.model.MVEnvironment;
@@ -21,14 +22,23 @@ package mundovirtual.view
 	{
 		private var environment:MVEnvironment;
 		private var layerAgents:Sprite = new Sprite();
+		private var layerBg:Sprite = new Sprite();
 		private var agents:Dictionary = new Dictionary();
 		private var w:int;
 		private var h:int;
+		private var offsetX:int;
+		private var offsetY:int;
+		
+		public function setOffset(off_x:int, off_y:int):void {
+			this.offsetX = off_x;
+			this.offsetY = off_y;
+		}
 		
 		public function draw():void {
+			return;
 			var shape:flash.display.Sprite = new flash.display.Sprite();
 			var color:uint = 0xFFFFFF;
-			shape.graphics.beginFill(color, 0.4);			
+			shape.graphics.beginFill(color, 0.01);			
 			shape.graphics.drawRect(0, 0, w, h);			
 			shape.graphics.endFill();
 			shape.graphics.lineStyle(1, 0xFF8040, 0.8);
@@ -59,6 +69,7 @@ package mundovirtual.view
 		}
 		
 		public function addLayers():void {
+			addChild(layerBg);
 			addChild(layerAgents);
 		}
 		
@@ -72,14 +83,18 @@ package mundovirtual.view
 			
 		}
 		
+		public function setBackground(img:Bitmap):void {
+			var tx:Texture = Texture.fromBitmap(img)
+			layerBg.addChild( new Image(tx));
+		}
 		
 		public function createAgent(agent:MVAgent):void 
 		{
 			var av:AgentView = new AgentView(agent);
 			layerAgents.addChild(av);
 			agents[agent] = av;
-			av.scaleX = 0.2;
-			av.scaleY = 0.2;
+			av.scaleX = 0.8;
+			av.scaleY = 0.8;
 			setAgentPosition(agent, agent.positionX, agent.positionY, false);
 			
 			
@@ -96,8 +111,8 @@ package mundovirtual.view
 		public function getPosition(posX:int, posY:int):Point {
 			var distX:int = w / environment.width;
 			var distY:int = h / environment.height;
-			var w_ini:int = distX/2;
-			var h_ini:int = distY/2;
+			var w_ini:int = distX/2 + offsetX;
+			var h_ini:int = distY/2 + offsetY;
 			return new Point((distX * posX) + w_ini, (distY * posY) + h_ini);
 			
 		}

@@ -6,12 +6,12 @@
     <movie input="" />
     <movie path="bin\AI-0109.swf" />
     <movie fps="30" />
-    <movie width="800" />
+    <movie width="700" />
     <movie height="600" />
     <movie version="11" />
     <movie minorVersion="2" />
     <movie platform="Flash Player" />
-    <movie background="#B6C9C1" />
+    <movie background="#000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

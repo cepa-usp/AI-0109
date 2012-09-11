@@ -43,6 +43,7 @@ package
 			mainScene.createScene(mv);
 					
 			var envController:EnvironmentController = new EnvironmentController(mv.environment, mainScene.enviro)
+			var labController:EnvironmentController = new EnvironmentController(mv.lab, mainScene.lab)
 			
 			mv.createAgents();
 			mv.start();

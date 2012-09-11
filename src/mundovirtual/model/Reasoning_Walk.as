@@ -141,7 +141,7 @@ package mundovirtual.model
 		private function chooseDirection():void 
 		{
 			if (agt.direction != null) return;
-			if (agt.color == MVAgent.COLOR_BLACK) {
+			if (agt.color == MVAgent.COLOR_BLUE) {
 				agt.direction = DIRECTION_DOWN.clone();
 			} else {
 				agt.direction = DIRECTION_RIGHT.clone();

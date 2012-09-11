@@ -18,9 +18,9 @@ package mundovirtual.model
 		public static const SHAPE_TETRA:int = 2;
 		public static const SHAPE_PENTA:int = 3;
 		
-		public static const COLOR_BLACK:int = 0;
-		public static const COLOR_WHITE:int = 1;
-		public static const COLOR_BLUE:int = 2;
+		public static const COLOR_BLUE:int = 0;
+		public static const COLOR_ORANGE:int = 1;
+		public static const COLOR_GREEN:int = 2;
 		public static const COLOR_RED:int = 3;
 
 		public static const SYMB_HEART:int = 0;
@@ -29,7 +29,7 @@ package mundovirtual.model
 		public static const SYMB_CLUB:int = 3;		
 		
 		private var _shape:int = MVAgent.SHAPE_ROUND;
-		private var _color:int = MVAgent.COLOR_BLACK;
+		private var _color:int = MVAgent.COLOR_BLUE;
 		private var _symbol:int = MVAgent.SYMB_HEART;
 
 		
@@ -40,9 +40,10 @@ package mundovirtual.model
 		}
 		
 		public function randomizeProperties():MVAgent {
-			this._color = Math.floor(Math.random() * 3)
-			this._symbol = Math.floor(Math.random() * 3)
-			this._shape = Math.floor(Math.random() * 3)
+			this._color = Math.floor(Math.random() * 4)
+			trace(_color)
+			this._symbol = Math.floor(Math.random() * 4)
+			this._shape = Math.floor(Math.random() * 4)
 			return this;
 		}
 		

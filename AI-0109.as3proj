@@ -16,8 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="lib\MinimalComps\src" />
-    <class path="..\..\Libs" />
+    <class path="lib" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -53,8 +52,9 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="src\agentes.swc" />
-    <element path="lib\ui.swc" />
     <element path="lib\starling.swc" />
+    <element path="lib\ui.swc" />
+    <element path="lib\as3corelib.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

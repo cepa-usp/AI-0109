@@ -1,5 +1,6 @@
 package 
 {
+	import cepa.ai.AI;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import mundovirtual.controller.EnvironmentController;
@@ -44,6 +45,9 @@ package
 					
 			var envController:EnvironmentController = new EnvironmentController(mv.environment, mainScene.enviro)
 			var labController:EnvironmentController = new EnvironmentController(mv.lab, mainScene.lab)
+			
+			var ai:AI = new AI(this);
+			
 			
 			mv.createAgents();
 			mv.start();

@@ -2,6 +2,7 @@ package mundovirtual.model
 {
 	import cepa.multiagent.agent.AgentEvent;
 	import cepa.multiagent.environment.Environment;
+	import flash.geom.Point;
 		
 	/**
 	 * ...
@@ -30,6 +31,17 @@ package mundovirtual.model
 		public function collideAgents(ag1:MVAgent, ag2:MVAgent):void {
 			
 		}
+		
+		public function findFreePosition():Point {			
+			// not so much efficient... but pretty elegant
+			var checkX:int = Math.floor(width * Math.random());
+			var checkY:int = Math.floor(height * Math.random());
+			if (!this.checkPosition(checkX, checkY)) {
+				return new Point(checkX, checkY);
+			} else {
+				return findFreePosition();
+			}
+		}			
 		
 
 		

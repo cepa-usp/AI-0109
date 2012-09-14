@@ -15,39 +15,35 @@ package mundovirtual.model
 		public function MV() 
 		{
 			environment = new MVEnvironment(15, 13);			
-			lab = new MVEnvironment(7, 7);
+			lab = new MVEnvironment(5, 5);
 		}
 		
 		public function createAgents():void {
 			
 			for (var i:int = 0; i < 30; i++) 	{
 				var a:MVAgent = new MVAgent().randomizeProperties();			
-				var f:Point = findFreePosition()			
+				var f:Point;
 			
-				if (i < 25) {
+				if (i < 28) {
+					f = environment.findFreePosition();
 					environment.addAgent(a, f.x, f.y);
 				} else {
+					f = lab.findFreePosition();
 					lab.addAgent(a, f.x, f.y);
 				}
 			}
 			
 		}
 		
-		public function findFreePosition():Point {			
-			// not so much efficient... but pretty elegant
-			var checkX:int = Math.floor(environment.width * Math.random());
-			var checkY:int = Math.floor(environment.height * Math.random());
-			if (!environment.checkPosition(checkX, checkY)) {
-				return new Point(checkX, checkY);
-			} else {
-				return findFreePosition();
-			}
-		}
+
 		
 		public function start():void {
 			for each (var a:Agent in environment.agents){
 				a.run();
 			}
+			for each (var aa:Agent in lab.agents){
+				aa.run();
+			}			
 		}
 		
 		public function get environment():MVEnvironment 

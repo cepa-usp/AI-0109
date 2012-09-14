@@ -34,8 +34,10 @@ package mundovirtual.view
 			this.offsetY = off_y;
 		}
 		
+		
 		public function draw():void {
-			return;
+			if(w>200) return;
+			
 			var shape:flash.display.Sprite = new flash.display.Sprite();
 			var color:uint = 0xFFFFFF;
 			shape.graphics.beginFill(color, 0.01);			
@@ -50,12 +52,12 @@ package mundovirtual.view
 			var h_fim:int = h - h_ini;
 			
 			for (var xx:int = 0; xx < environment.width; xx++) {
-				//shape.graphics.moveTo(w_ini + distX*xx, h_ini)
-				//shape.graphics.lineTo(w_ini + distX*xx, h_fim)
+				shape.graphics.moveTo(w_ini + distX*xx, h_ini)
+				shape.graphics.lineTo(w_ini + distX*xx, h_fim)
 			}
 			for (var yy:int = 0; yy < environment.height; yy++) {
-				//shape.graphics.moveTo(w_ini, h_ini + distY*yy)
-				//shape.graphics.lineTo(w_fim,  h_ini + distY*yy)
+				shape.graphics.moveTo(w_ini, h_ini + distY*yy)
+				shape.graphics.lineTo(w_fim,  h_ini + distY*yy)
 
 			}
 
@@ -93,13 +95,23 @@ package mundovirtual.view
 			var av:AgentView = new AgentView(agent);
 			layerAgents.addChild(av);
 			agents[agent] = av;
-			av.scaleX = 0.8;
-			av.scaleY = 0.8;
+			//av.scaleX = 0.8;
+			//av.scaleY = 0.8;
+			scaleAgent(av)
 			setAgentPosition(agent, agent.positionX, agent.positionY, false);
 			
 			
 		}
 		
+		public function scaleAgent(a:AgentView):Number {
+			var p:Point = new Point(0, 0);
+			var distX:Number = (w / environment.width);
+			//var distY:Number = h / environment.height;
+			var scl:Number = distX/a.width ;
+			a.scaleX = scl;
+			a.scaleY = scl;
+			return scl
+		}
 		
 		
 		/**

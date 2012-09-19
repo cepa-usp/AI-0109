@@ -99,6 +99,7 @@ package mundovirtual.view
 			//av.scaleY = 0.8;
 			scaleAgent(av)
 			setAgentPosition(agent, agent.positionX, agent.positionY, false);
+			dispatchEvent(new EnviroViewEvent(this, av, EnviroViewEvent.AGENT_CREATED, false));
 			
 			
 		}

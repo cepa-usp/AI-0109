@@ -3,6 +3,7 @@ package
 	import cepa.ai.AI;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import mundovirtual.controller.AgentDragController;
 	import mundovirtual.controller.EnvironmentController;
 	import mundovirtual.model.MV;
 	import mundovirtual.view.EnvironmentView;
@@ -45,7 +46,7 @@ package
 					
 			var envController:EnvironmentController = new EnvironmentController(mv.environment, mainScene.enviro)
 			var labController:EnvironmentController = new EnvironmentController(mv.lab, mainScene.lab)
-			
+			var agController:AgentDragController = new AgentDragController(mv, mainScene);
 			var ai:AI = new AI(this);
 			
 			

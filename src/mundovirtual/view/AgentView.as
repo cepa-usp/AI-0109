@@ -21,7 +21,7 @@ package mundovirtual.view
 		public static var AgtPngXml:Class;		
 		
 		public static var textAtlas:TextureAtlas = null;		
-		private var agent:MVAgent;
+		private var _agent:MVAgent;
 		
 		
 		public static function getPic(picname:String):Image {
@@ -52,6 +52,16 @@ package mundovirtual.view
 			addChild(img);
 			img.x = (- img.width / 2)+1;
 			img.y = (-img.height/2)+1
+		}
+		
+		public function get agent():MVAgent 
+		{
+			return _agent;
+		}
+		
+		public function set agent(value:MVAgent):void 
+		{
+			_agent = value;
 		}
 		
 	}

@@ -126,8 +126,9 @@ package mundovirtual.model
 			agt.environment.eventDispatcher.dispatchEvent(new AgentEvent(AgentEvent.MOVEMENT_STATE_CHANGED, agt));
 		}
 		
-		public function process(agt:Agent):void 
+		public function process(agt:Agent):void 		
 		{	
+			if (agt.state == Agent.STATE_PAUSED) return;
 			if (movementState == STATE_STOPPED) chooseDirection();			
 			var ev:AgentEvent = new AgentEvent(AgentEvent.MOVE_REQUEST, this.agt);
 			ev.walkX = agt.positionX + agt.direction.x;

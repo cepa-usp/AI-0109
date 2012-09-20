@@ -20,7 +20,7 @@ package mundovirtual.model
 		
 		public function createAgents():void {
 			
-			for (var i:int = 0; i < 30; i++) 	{
+			for (var i:int = 0; i < 20; i++) 	{
 				var a:MVAgent = new MVAgent().randomizeProperties();			
 				var f:Point;
 			

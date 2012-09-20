@@ -22,7 +22,7 @@ package mundovirtual.view
 		
 		public static var textAtlas:TextureAtlas = null;		
 		private var _agent:MVAgent;
-		
+		private var img:Image = null;
 		
 		public static function getPic(picname:String):Image {
 			if (AgentView.textAtlas == null) createTextures();
@@ -48,10 +48,16 @@ package mundovirtual.view
 		public function AgentView(agent:MVAgent) 
 		{
 			this.agent = agent;
-			var img:Image = getPic(calculatePicName());
+			drawImage();
+
+		}
+		
+		public function drawImage():void {
+			if (img != null) removeChild(img);
+			img = getPic(calculatePicName());			
 			addChild(img);
-			img.x = (- img.width / 2)+1;
-			img.y = (-img.height/2)+1
+			img.x = (-img.width / 2)+1;
+			img.y = (-img.height/2)+1			
 		}
 		
 		public function get agent():MVAgent 

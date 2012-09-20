@@ -37,10 +37,29 @@ package mundovirtual.model
 			agt.environment.eventDispatcher.addEventListener(AgentEvent.MOVEMENT_STATE_CHANGED, onMovementChanged);
 			agt.environment.eventDispatcher.addEventListener(AgentEvent.AGENT_MOVEMENT_ALLOWED, onMovementAllowed);
 			agt.environment.eventDispatcher.addEventListener(AgentEvent.AGENT_MOVEMENT_DENIED, onMovementDenied);			
+			agt.environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_COLLIDED, onCollided);
 			agt.environment.eventDispatcher.addEventListener(MVAgentEvent.SEEK_FINISHED, onSeekFinished);
 			agt.environment.eventDispatcher.addEventListener(AgentEvent.AGENT_POSITION_REACHED, onPositionReached);
+			agt.environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_TRANSFORMED, onTransformed);
 			
 			
+		}
+		
+		private function onTransformed(e:MVAgentEvent):void 
+		{
+			if (e.agent == agt) {
+				agt.direction= null;
+				chooseDirection();
+			}
+		}
+		
+		private function onCollided(e:MVAgentEvent):void 
+		{
+			//if (e.collidedWith == agt || e.agent) {
+//				agt.direction = null;
+				//chooseDirection();
+				//movementState = Reasoning_Walk.STATE_SEEK;
+			//}
 		}
 		
 		
@@ -138,11 +157,27 @@ package mundovirtual.model
 			agt.environment.eventDispatcher.dispatchEvent(ev);	
 		}
 		
+		/* INTERFACE cepa.multiagent.reasoning.IReasoning */
+		
+		public function cancel():void
+		{
+			agt.environment.eventDispatcher.removeEventListener(AgentEvent.MOVEMENT_STATE_CHANGED, onMovementChanged);
+			agt.environment.eventDispatcher.removeEventListener(AgentEvent.AGENT_MOVEMENT_ALLOWED, onMovementAllowed);
+			agt.environment.eventDispatcher.removeEventListener(AgentEvent.AGENT_MOVEMENT_DENIED, onMovementDenied);			
+			agt.environment.eventDispatcher.removeEventListener(MVAgentEvent.SEEK_FINISHED, onSeekFinished);
+			agt.environment.eventDispatcher.removeEventListener(MVAgentEvent.AGENT_COLLIDED, onCollided);
+			agt.environment.eventDispatcher.removeEventListener(AgentEvent.AGENT_POSITION_REACHED, onPositionReached);			
+			agt.environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_TRANSFORMED, onTransformed);
+			this.agt.removeReasoning(this);
+			this.agt = null;
+			
+		}
+		
 		
 		private function chooseDirection():void 
 		{
 			if (agt.direction != null) return;
-			if (agt.color == MVAgent.COLOR_BLUE) {
+			if (agt.color < 2) {
 				agt.direction = DIRECTION_DOWN.clone();
 			} else {
 				agt.direction = DIRECTION_RIGHT.clone();

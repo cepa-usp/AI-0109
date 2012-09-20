@@ -10,6 +10,7 @@ package mundovirtual.view
 	import flash.system.ImageDecodingPolicy;
 	import flash.utils.Dictionary;
 	import mundovirtual.model.MVAgent;
+	import mundovirtual.model.MVAgentEvent;
 	import mundovirtual.model.MVEnvironment;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -20,7 +21,7 @@ package mundovirtual.view
 	 */
 	public class EnvironmentView extends Sprite
 	{
-		private var environment:MVEnvironment;
+		private var _environment:MVEnvironment;
 		private var layerAgents:Sprite = new Sprite();
 		private var layerBg:Sprite = new Sprite();
 		private var agents:Dictionary = new Dictionary();
@@ -36,7 +37,7 @@ package mundovirtual.view
 		
 		
 		public function draw():void {
-			if(w>200) return;
+			if(w>00) return;
 			
 			var shape:flash.display.Sprite = new flash.display.Sprite();
 			var color:uint = 0xFFFFFF;
@@ -45,6 +46,7 @@ package mundovirtual.view
 			shape.graphics.endFill();
 			shape.graphics.lineStyle(1, 0xFF8040, 0.8);
 			var distX:int = w / environment.width;
+			var distY:int = h / environment.height;
 			var distY:int = h / environment.height;
 			var w_ini:int = distX/2;
 			var h_ini:int = distY/2;
@@ -80,9 +82,15 @@ package mundovirtual.view
 			this.h = h;
 			this.w = w;
 			this.environment = environment;			
+			environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_TRANSFORMED, onAgentTransformed);
 			addLayers();
 			draw();
 			
+		}
+		
+		private function onAgentTransformed(e:MVAgentEvent):void 
+		{
+			AgentView(agents[e.agent]).drawImage();
 		}
 		
 		public function setBackground(img:Bitmap):void {
@@ -99,6 +107,7 @@ package mundovirtual.view
 			//av.scaleY = 0.8;
 			scaleAgent(av)
 			setAgentPosition(agent, agent.positionX, agent.positionY, false);
+			
 			dispatchEvent(new EnviroViewEvent(this, av, EnviroViewEvent.AGENT_CREATED, false));
 			
 			
@@ -170,6 +179,27 @@ package mundovirtual.view
 			var dur:Number = dist / vel
 			return dur;
 		}	
+		
+		public function getNearestModelPosition(posii:Point):Point 
+		{
+			var posi:Point = globalToLocal(posii);
+			var distX:int = w / environment.width;
+			var distY:int = h / environment.height;
+			
+			var p:Point = new Point(Math.floor((posi.x - offsetX) / distX), Math.floor((posi.y - offsetY) / distY));
+			return p;
+			
+		}
+		
+		public function get environment():MVEnvironment 
+		{
+			return _environment;
+		}
+		
+		public function set environment(value:MVEnvironment):void 
+		{
+			_environment = value;
+		}
 		
 	}
 

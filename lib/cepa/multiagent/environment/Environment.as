@@ -38,6 +38,8 @@ package  cepa.multiagent.environment
 				for (j= 0; j <= height; j++) {
 					var p:EnvrPosition = new EnvrPosition();
 					positions.push(p);
+					p.posX = i;
+					p.posY = j;
 					pos[i][j] = p;
 				}
 			}
@@ -55,19 +57,38 @@ package  cepa.multiagent.environment
 			
 		}
 		
-		public function checkPosition(x:int, y:int):Boolean {
+		public function checkPosition(agt:Agent, x:int, y:int):Boolean {
 			if (x < 0 || x>=this.width) return true;
 			if (y <0 || y >= this.height) return true;			
 			var p:EnvrPosition = pos[x][y];
-			if (p.agentHere != null) return true;
+			if (p.agentHere != null) {
+				return true;
+			}
 			return false;
-
+		}
+		
+		
+		public function findNearestFreePosition(srcPoint:Point):Point {
+			var dmin:Number = 99999;
+			var pmin:Point = srcPoint.clone();
+			var lpt:Point = new Point(0, 0)
+			var d:Number = 0;
+			for each(var ep:EnvrPosition in positions) {
+				lpt.x = ep.posX; 
+				lpt.y = ep.posY;
+				d = Point.distance(srcPoint, lpt);
+				if (ep.agentHere==null && d<dmin) {
+					dmin = d;
+					pmin = new Point(ep.posX, ep.posY);
+				}
+			}
+			return pmin;
 		}
 		
 		private function onAgentMoveRequested(e:AgentEvent):void 
 		{
 			// TODO:verificar se o agente pode se mover pra posição que ele está querendo
-			var deny:Boolean = checkPosition(e.walkX, e.walkY);
+			var deny:Boolean = checkPosition(e.agent, e.walkX, e.walkY);
 			if (!deny) {
 				eventDispatcher.dispatchEvent(new AgentEvent(AgentEvent.AGENT_MOVEMENT_ALLOWED, e.agent).setWalkPosition(e.walkX, e.walkY));	
 				

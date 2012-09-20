@@ -2,6 +2,10 @@ package mundovirtual.controller
 {
 	import cepa.multiagent.agent.Agent;
 	import cepa.multiagent.agent.AgentEvent;
+	import cepa.multiagent.environment.Environment;
+	import mundovirtual.view.LabContainer;
+	import starling.display.DisplayObject;
+	
 	import flash.geom.Point;
 	import mundovirtual.model.MVAgentEvent;
 	import mundovirtual.view.AgentView;
@@ -50,10 +54,12 @@ package mundovirtual.controller
 			
 			if (this._state == AgentDragController.STATE_STOPPED) {
 				if (touch.phase == TouchPhase.BEGAN) {
-					trace("pegou")
+				//	trace("pegou")
 					state = AgentDragController.STATE_DRAGGING;
 					dragAgent = AgentView(Image(e.target).parent);
 					dragAgent.agent.state = Agent.STATE_PAUSED;
+					dragAgent.parent.removeChild(dragAgent);
+					mainScene.layerDragArea.addChild(dragAgent);
 					dragAgent.x = position.x// - dragAgent.width/2;
 					dragAgent.y = position.y// - dragAgent.height/2;					
 				} 
@@ -77,12 +83,39 @@ package mundovirtual.controller
 
 		}
 		
+		private function findEnviro(o:DisplayObject):EnvironmentView {
+			if (o == null) return null;
+			if (o is EnvironmentView) return EnvironmentView(o);
+			if (o is LabContainer) return EnvironmentView(LabContainer(o).getChildByName("LabEnvironmentView"));
+			return findEnviro(o.parent);
+			
+		}
+		
+		
 		private function calculateNewPosition(ag:AgentView, pos:Point):void 
 		{
 			// calculate environment
-			mainScene.localToGlobal(pos)
+			var o:Object = mainScene.layerLabs.hitTest(pos);
+			var env:EnvironmentView = null;
+			if (o != null) {
+				if (o is Image) {
+					env = findEnviro(Image(o));
+					trace(env);
+				}
+			}
+			mainScene.layerDragArea.removeChild(ag);
+			
+			var possibleModelPosition:Point = env.getNearestModelPosition(pos);
+			var posvai:Point = env.environment.findNearestFreePosition(possibleModelPosition);
+			//trace(pos, possibleModelPosition, posvai);
+			if (env != null) {
+				env.environment.registerAgent(ag.agent, posvai.x, posvai.y);
+			}
 			
 			// calculate position
+			// encontrar a posicao equivalente
+			
+			// encontrar a posicao mais próxima válida
 			
 		}
 

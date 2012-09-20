@@ -41,6 +41,11 @@ package cepa.multiagent.agent
 			_uid = Util.nextID();
 		}
 		
+		public function removeReasoning(reas:IReasoning):void 
+		{
+			reasoning.splice(reasoning.indexOf(reas), 1);
+		}		
+		
 		public function get environment():Environment 
 		{
 			return _environment;

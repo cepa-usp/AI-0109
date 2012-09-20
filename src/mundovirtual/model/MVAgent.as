@@ -41,19 +41,22 @@ package mundovirtual.model
 		
 		public function randomizeProperties():MVAgent {
 			this._color = Math.floor(Math.random() * 4)
-			trace(_color)
+			//trace(_color)
 			this._symbol = Math.floor(Math.random() * 4)
 			this._shape = Math.floor(Math.random() * 4)
 			return this;
 		}
 		
 		protected override function onEnvironmentChanged():void {
+			
 			createResources();
 		}
 		
 		public function createResources():void {
+			for each(var r:IReasoning in reasoning) r.cancel();
 			this.sensors = new Vector.<ISensor>();
 			this.reasoning = new Vector.<IReasoning>();
+			
 			
 			this.sensors.push(new Sensor_CheckPositions());
 			this.reasoning.push(new Reasoning_Walk(this))			
@@ -64,6 +67,8 @@ package mundovirtual.model
 		public function commitTransformation():void {
 			environment.eventDispatcher.dispatchEvent(new MVAgentEvent(this, MVAgentEvent.AGENT_TRANSFORMED))	
 		}
+		
+
 		
 		public function get shape():int 
 		{

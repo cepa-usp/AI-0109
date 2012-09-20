@@ -22,6 +22,8 @@ package mundovirtual.view
 		private var _enviro:EnvironmentView;
 		private var _lab:EnvironmentView;
 		private var _labContainer:LabContainer = new LabContainer();
+		private var _layerDragArea:Sprite = new Sprite();
+		private var _layerLabs:Sprite = new Sprite();
 		
 		[Embed(source = "environmt_img.png")]
 		public static var ImgMainBg:Class;
@@ -37,6 +39,9 @@ package mundovirtual.view
 		
 		private function onLabTabTouch(e:TouchEvent):void 
 		{
+			if (!(Image(e.target).parent is LabContainer)) {
+				return;
+			}
 			var touch:Touch = e.getTouch(stage, TouchPhase.BEGAN);
 			if (touch) {
 				var position:Point = touch.getLocation(Image(e.target));				
@@ -58,17 +63,23 @@ package mundovirtual.view
 		}
 				
 		public function createScene(mv:MV):void {
+			layerLabs.name = "layerLabs";
+			layerDragArea.name = "layerDragArea"
+			addChild(layerLabs);
 			enviro = new EnvironmentView(mv.environment, 700, 600)
+			enviro.name = "DefaultEnvironmentView"
 			enviro.setBackground(Bitmap(new ImgMainBg()));			
-			addChild(enviro);
-			addChild(labContainer);
+			layerLabs.addChild(enviro);
+			layerLabs.addChild(labContainer);
 			lab = new EnvironmentView(mv.lab, 185, 215);
+			lab.name = "LabEnvironmentView"
 			labContainer.addChild(lab);
+			labContainer.name = "LabContainer"
 			lab.x = 30;
 			labContainer.x = LABCONTAINER_X_CLOSED;
 			labContainer.y = 100;
 			labContainer.addEventListener(TouchEvent.TOUCH, onLabTabTouch);
-			
+			addChild(layerDragArea);
 			
 		}
 		
@@ -108,6 +119,26 @@ package mundovirtual.view
 		public function set labContainer(value:LabContainer):void 
 		{
 			_labContainer = value;
+		}
+		
+		public function get layerDragArea():Sprite 
+		{
+			return _layerDragArea;
+		}
+		
+		public function set layerDragArea(value:Sprite):void 
+		{
+			_layerDragArea = value;
+		}
+		
+		public function get layerLabs():Sprite 
+		{
+			return _layerLabs;
+		}
+		
+		public function set layerLabs(value:Sprite):void 
+		{
+			_layerLabs = value;
 		}
 		
 		

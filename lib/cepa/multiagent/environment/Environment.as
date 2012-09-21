@@ -57,6 +57,13 @@ package  cepa.multiagent.environment
 			
 		}
 		
+		public function unRegisterAgent(a:Agent):void {
+			agents.splice(agents.indexOf(a), 1);
+			a.environment = null;
+			
+		}
+				
+		
 		public function checkPosition(agt:Agent, x:int, y:int):Boolean {
 			if (x < 0 || x>=this.width) return true;
 			if (y <0 || y >= this.height) return true;			
@@ -88,6 +95,7 @@ package  cepa.multiagent.environment
 		private function onAgentMoveRequested(e:AgentEvent):void 
 		{
 			// TODO:verificar se o agente pode se mover pra posição que ele está querendo
+			if (e.agent.environment != this) return;
 			var deny:Boolean = checkPosition(e.agent, e.walkX, e.walkY);
 			if (!deny) {
 				eventDispatcher.dispatchEvent(new AgentEvent(AgentEvent.AGENT_MOVEMENT_ALLOWED, e.agent).setWalkPosition(e.walkX, e.walkY));	
@@ -98,11 +106,7 @@ package  cepa.multiagent.environment
 			}
 		}
 		
-		public function unRegisterAgent(a:Agent):void {
-			//eventDispatcher.addEventListener(AgentEvent.MOVE_REQUEST, onAgentMoveRequested);
-			// tirar todos os listeners pro gc conseguir se livrar de agentes se necessario
-		}
-		
+
 		public function setAgentPosition(a:Agent,  px:int, py:int):void {
 			if(a.positionX>=0 && a.positionX<=this.width && a.positionY>=0 && a.positionY<=this.height){
 				var vv:EnvrPosition = pos[a.positionX][a.positionY]

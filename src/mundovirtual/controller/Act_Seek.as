@@ -5,6 +5,7 @@ package mundovirtual.controller
 	import cepa.multiagent.agent.AgentEvent;
 	import com.eclecticdesignstudio.motion.Actuate;
 	import com.eclecticdesignstudio.motion.easing.Linear;
+	import mundovirtual.model.MV;
 	import mundovirtual.model.MVAgent;
 	import mundovirtual.model.MVAgentEvent;
 	/**
@@ -36,7 +37,7 @@ package mundovirtual.controller
 		
 		public function execute(agt:Agent):void 
 		{
-			Actuate.timer(seektime).ease(Linear.easeNone).onComplete(finish);
+			Actuate.timer(seektime * MV.velocity).ease(Linear.easeNone).onComplete(finish);
 		}
 		
 		public function finish():Boolean 

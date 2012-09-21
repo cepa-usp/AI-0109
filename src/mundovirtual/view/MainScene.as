@@ -24,11 +24,14 @@ package mundovirtual.view
 		private var _labContainer:LabContainer = new LabContainer();
 		private var _layerDragArea:Sprite = new Sprite();
 		private var _layerLabs:Sprite = new Sprite();
+		private var _plainStageSprite:flash.display.Sprite;
+		private var _playControl:PlayCtrl;
 		
-		[Embed(source = "environmt_img.png")]
+		[Embed(source = "environmt_img2.jpg")]
 		public static var ImgMainBg:Class;
 		
-		public const LABCONTAINER_X_CLOSED:int = 680;
+		public const LABCONTAINER_X_CLOSED:int = 670;
+		public const LABCONTAINER_X_OPENED:int = 470;
 
 		
 		public function MainScene() 
@@ -56,31 +59,40 @@ package mundovirtual.view
 			labContainer.opened = value;
 			var toX:int = LABCONTAINER_X_CLOSED;
 			if (labContainer.opened) {
-				toX = this.stage.stageWidth - labContainer.width;
+				toX = LABCONTAINER_X_OPENED;
+				
 			} 
-			trace(labContainer.width)
+			
 			Actuate.tween(labContainer, 1, {x:toX})
 		}
 				
 		public function createScene(mv:MV):void {
 			layerLabs.name = "layerLabs";
-			layerDragArea.name = "layerDragArea"
+			layerDragArea.name = "layerDragArea";
 			addChild(layerLabs);
 			enviro = new EnvironmentView(mv.environment, 700, 600)
-			enviro.name = "DefaultEnvironmentView"
+			enviro.name = "DefaultEnvironmentView";
 			enviro.setBackground(Bitmap(new ImgMainBg()));			
 			layerLabs.addChild(enviro);
 			layerLabs.addChild(labContainer);
 			lab = new EnvironmentView(mv.lab, 185, 215);
-			lab.name = "LabEnvironmentView"
+			lab.name = "LabEnvironmentView";
 			labContainer.addChild(lab);
-			labContainer.name = "LabContainer"
+			labContainer.name = "LabContainer";
 			lab.x = 30;
 			labContainer.x = LABCONTAINER_X_CLOSED;
 			labContainer.y = 100;
 			labContainer.addEventListener(TouchEvent.TOUCH, onLabTabTouch);
 			addChild(layerDragArea);
-			
+			createPlayControl();
+		}
+		
+		private function createPlayControl():void 
+		{
+			playControl = new PlayCtrl();
+			plainStageSprite.addChild(playControl);
+			playControl.x = 20;
+			playControl.y = 20;			
 		}
 		
 		
@@ -139,6 +151,26 @@ package mundovirtual.view
 		public function set layerLabs(value:Sprite):void 
 		{
 			_layerLabs = value;
+		}
+		
+		public function get plainStageSprite():flash.display.Sprite 
+		{
+			return _plainStageSprite;
+		}
+		
+		public function set plainStageSprite(value:flash.display.Sprite):void 
+		{
+			_plainStageSprite = value;
+		}
+		
+		public function get playControl():PlayCtrl 
+		{
+			return _playControl;
+		}
+		
+		public function set playControl(value:PlayCtrl):void 
+		{
+			_playControl = value;
 		}
 		
 		

@@ -55,6 +55,7 @@
     <element path="lib\starling.swc" />
     <element path="lib\ui.swc" />
     <element path="lib\as3corelib.swc" />
+    <element path="lib\mvirt.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

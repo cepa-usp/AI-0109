@@ -6,6 +6,7 @@ package mundovirtual.controller
 	import cepa.multiagent.agent.AgentEvent;
 	import com.eclecticdesignstudio.motion.Actuate;
 	import com.eclecticdesignstudio.motion.easing.Linear;
+	import mundovirtual.model.MV;
 	import mundovirtual.model.MVAgent;
 	import mundovirtual.model.MVAgentEvent;
 	import mundovirtual.model.MVEnvironment;
@@ -36,7 +37,7 @@ package mundovirtual.controller
 		{
 			var a:MVAgent = MVAgent(agent);
 			a.environment.setAgentPosition(a, toX, toY);
-			Actuate.timer(time).ease(Linear.easeNone).onComplete(finish);
+			Actuate.timer(time * MV.velocity).ease(Linear.easeNone).onComplete(finish);
 
 		}
 		

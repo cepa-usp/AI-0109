@@ -3,12 +3,14 @@ package mundovirtual.view
 	import cepa.multiagent.agent.Agent;
 	import cepa.multiagent.agent.AgentEvent;
 	import com.eclecticdesignstudio.motion.Actuate;
+	import com.eclecticdesignstudio.motion.easing.Elastic;
 	import com.eclecticdesignstudio.motion.easing.Linear;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.system.ImageDecodingPolicy;
 	import flash.utils.Dictionary;
+	import mundovirtual.model.MV;
 	import mundovirtual.model.MVAgent;
 	import mundovirtual.model.MVAgentEvent;
 	import mundovirtual.model.MVEnvironment;
@@ -83,9 +85,24 @@ package mundovirtual.view
 			this.w = w;
 			this.environment = environment;			
 			environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_TRANSFORMED, onAgentTransformed);
+			environment.eventDispatcher.addEventListener(MVAgentEvent.AGENT_COLLIDED, onAgentCollided);
 			addLayers();
 			draw();
 			
+		}
+		
+		private function onAgentCollided(e:MVAgentEvent):void 
+		{
+			//trace("opaaa");
+			jump(agents[e.agent]);
+			jump(agents[e.collidedWith]);
+			
+		}
+		
+		private function jump(av:AgentView) {
+			Actuate.tween(av, 0.2, { rotation:5 } ).ease(Linear.easeNone).onComplete(function() {
+				Actuate.tween(av, 0.2, { rotation:0 } ).ease(Linear.easeNone);
+			})
 		}
 		
 		private function onAgentTransformed(e:MVAgentEvent):void 
@@ -153,7 +170,7 @@ package mundovirtual.view
 			var av:AgentView = AgentView(agents[a]);
 			var pos:Point = getPosition(posX, posY);			
 			if (animate) {
-				Actuate.tween(av, calculateDuration(a, pos), { x:pos.x, y:pos.y } ).ease(Linear.easeNone);
+				Actuate.tween(av, calculateDuration(a, pos) * MV.velocity, { x:pos.x, y:pos.y } ).ease(Linear.easeNone);
 			} else {
 				av.x = pos.x;
 				av.y = pos.y;

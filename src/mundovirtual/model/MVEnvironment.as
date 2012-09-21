@@ -47,9 +47,10 @@ package mundovirtual.model
 		}
 		
 		public function collideAgents(ag1:MVAgent, ag2:MVAgent):void {
-			var p_colors:Point = findMatrixValues(ag1.color, ag2.color);
-			var p_symbol:Point = findMatrixValues(ag1.symbol, ag2.symbol);
+			var p_colors:Point = wrapPoint(findMatrixValues(ag1.color, ag2.color));
+			var p_symbol:Point = wrapPoint(findMatrixValues(ag1.symbol, ag2.symbol));
 			ag1.color = p_colors.x;
+			
 			ag2.color = p_colors.y;
 			ag1.symbol = p_symbol.x;
 			ag2.symbol = p_symbol.y;
@@ -66,13 +67,25 @@ package mundovirtual.model
 			var c2:matrix = new matrix(1, 2, val1, val2);
 			var c3:matrix = c.mulMatrix(c2);
 			var p:Point = new Point(c3.getElement(0, 0), c3.getElement(0, 1))
-			p.x = wrap(p.x, 3, 0);
-			p.y = wrap(p.y, 3, 0);
 			return p;
 		}
 		
+		
+		
+		public function wrapPoint(p_in:Point):Point {
+			return new Point(wrap(p_in.x, 3, 0), wrap(p_in.y, 3, 0));
+		}
+		
 		public function wrap(x:Number, d:Number, x0:Number):Number {
-			return x - d * Math.floor((x - x0) / d);
+			//return x - d * Math.floor((x - x0) / d);
+			
+			switch(x) {				
+				case -3: return 1;
+				case -2: return 2;
+				case -1: return 3;
+				case -4: return 1;				
+			}
+			return x;
 		}
 		
 		public function findFreePosition():Point {			

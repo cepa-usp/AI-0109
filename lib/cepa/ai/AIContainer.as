@@ -183,7 +183,7 @@ package cepa.ai
 			
 		}
 		
-		private function addTooltip(spr:Sprite, tx:String) {
+		private function addTooltip(spr:Sprite, tx:String):void {
 			new ToolTip(spr, tx);
 		}
 		
@@ -224,7 +224,7 @@ package cepa.ai
 		}
 		
 		public function setMessageTextVisible(value:Boolean):void {
-			Actuate.tween(optionButtons, 0.8, { y:(value?this.height:0)});
+			Actuate.tween(messageLabel, 0.8, { y:(value?this.height-messageLabel.height-15:this.height)});
 		}
 		
 		public function setOptionsMenuVisible(value:Boolean):void {

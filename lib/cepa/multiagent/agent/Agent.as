@@ -54,6 +54,7 @@ package cepa.multiagent.agent
 		public function set environment(value:Environment):void 
 		{
 			_environment = value;
+			if (value == null) return;
 			onEnvironmentChanged();
 		}
 		

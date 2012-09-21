@@ -3,6 +3,7 @@ package mundovirtual.controller
 	import cepa.multiagent.agent.Agent;
 	import cepa.multiagent.agent.AgentEvent;
 	import cepa.multiagent.environment.Environment;
+	import cepa.multiagent.environment.EnvrPosition;
 	import mundovirtual.view.LabContainer;
 	import starling.display.DisplayObject;
 	
@@ -58,6 +59,13 @@ package mundovirtual.controller
 					state = AgentDragController.STATE_DRAGGING;
 					dragAgent = AgentView(Image(e.target).parent);
 					dragAgent.agent.state = Agent.STATE_PAUSED;
+					for each (var ep:EnvrPosition in dragAgent.agent.environment.positions) {
+						if (ep.agentHere == dragAgent.agent) {
+							ep.agentHere = null;
+							dragAgent.agent.positionX = -1;
+							dragAgent.agent.positionY = -1;
+						}
+					}
 					dragAgent.parent.removeChild(dragAgent);
 					mainScene.layerDragArea.addChild(dragAgent);
 					dragAgent.x = position.x// - dragAgent.width/2;
@@ -68,7 +76,7 @@ package mundovirtual.controller
 					dragAgent.x = position.x// - dragAgent.width/2;
 					dragAgent.y = position.y// - dragAgent.height/2;
 				} else if (touch.phase == TouchPhase.ENDED) {
-					trace("soltou")					
+					//trace("soltou")					
 					state = AgentDragController.STATE_STOPPED
 					calculateNewPosition(dragAgent, position)
 					
@@ -100,7 +108,7 @@ package mundovirtual.controller
 			if (o != null) {
 				if (o is Image) {
 					env = findEnviro(Image(o));
-					trace(env);
+					//trace(env);
 				}
 			}
 			mainScene.layerDragArea.removeChild(ag);
@@ -109,6 +117,7 @@ package mundovirtual.controller
 			var posvai:Point = env.environment.findNearestFreePosition(possibleModelPosition);
 			//trace(pos, possibleModelPosition, posvai);
 			if (env != null) {
+				ag.agent.environment.unRegisterAgent(ag.agent);
 				env.environment.registerAgent(ag.agent, posvai.x, posvai.y);
 			}
 			

@@ -1,6 +1,7 @@
 package mundovirtual.model 
 {
 	import cepa.multiagent.agent.Agent;
+	import cepa.multiagent.reasoning.IReasoning;
 	import flash.geom.Point;
 	/**
 	 * ...
@@ -9,6 +10,7 @@ package mundovirtual.model
 	public class MV 
 	{
 		
+		private static var _velocity:Number = 1;
 		private var _environment:MVEnvironment;
 		private var _lab:MVEnvironment;
 		
@@ -20,7 +22,7 @@ package mundovirtual.model
 		
 		public function createAgents():void {
 			
-			for (var i:int = 0; i < 20; i++) 	{
+			for (var i:int = 0; i < 10; i++) 	{
 				var a:MVAgent = new MVAgent().randomizeProperties();			
 				var f:Point;
 			
@@ -46,6 +48,27 @@ package mundovirtual.model
 			}			
 		}
 		
+		public function pause():void 
+		{
+			for each (var a:Agent in environment.agents){
+				for each(var r:IReasoning in a.reasoning) {
+					r.cancel();
+				}
+			}
+			for each (var a:Agent in lab.agents){
+				for each(var r:IReasoning in a.reasoning) {
+					r.cancel();
+				}
+			}
+		}
+		
+		public function play():void 
+		{
+			for each (var a:Agent in environment.agents) MVAgent(a).createResources();
+			for each (var a:Agent in lab.agents) MVAgent(a).createResources();
+			start();
+		}
+		
 		public function get environment():MVEnvironment 
 		{
 			return _environment;
@@ -64,6 +87,16 @@ package mundovirtual.model
 		public function set lab(value:MVEnvironment):void 
 		{
 			_lab = value;
+		}
+		
+		static public function get velocity():Number 
+		{
+			return 1/_velocity;
+		}
+		
+		static public function set velocity(value:Number):void 
+		{
+			_velocity = value;
 		}
 		
 	}

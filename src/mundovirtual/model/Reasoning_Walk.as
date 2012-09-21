@@ -50,6 +50,7 @@ package mundovirtual.model
 			if (e.agent == agt) {
 				agt.direction= null;
 				chooseDirection();
+				changeDirection();
 			}
 		}
 		
@@ -184,6 +185,8 @@ package mundovirtual.model
 			}
 			
 		}
+		
+	
 		
 		private function changeDirection():void {
 			agt.direction.x *= -1;

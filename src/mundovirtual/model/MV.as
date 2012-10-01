@@ -13,6 +13,7 @@ package mundovirtual.model
 		private static var _velocity:Number = 1;
 		private var _environment:MVEnvironment;
 		private var _lab:MVEnvironment;
+		private var _paused:Boolean = false;
 		
 		public function MV() 
 		{
@@ -55,9 +56,9 @@ package mundovirtual.model
 					r.cancel();
 				}
 			}
-			for each (var a:Agent in lab.agents){
-				for each(var r:IReasoning in a.reasoning) {
-					r.cancel();
+			for each (var aa:Agent in lab.agents){
+				for each(var rr:IReasoning in aa.reasoning) {
+					rr.cancel();
 				}
 			}
 		}
@@ -97,6 +98,16 @@ package mundovirtual.model
 		static public function set velocity(value:Number):void 
 		{
 			_velocity = value;
+		}
+		
+		public function get paused():Boolean 
+		{
+			return _paused;
+		}
+		
+		public function set paused(value:Boolean):void 
+		{
+			_paused = value;
 		}
 		
 	}

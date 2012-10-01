@@ -4,6 +4,7 @@ package mundovirtual.controller
 	import cepa.multiagent.agent.AgentEvent;
 	import cepa.multiagent.environment.Environment;
 	import cepa.multiagent.environment.EnvrPosition;
+	import cepa.multiagent.reasoning.IReasoning;
 	import mundovirtual.view.LabContainer;
 	import starling.display.DisplayObject;
 	
@@ -59,6 +60,11 @@ package mundovirtual.controller
 					state = AgentDragController.STATE_DRAGGING;
 					dragAgent = AgentView(Image(e.target).parent);
 					dragAgent.agent.state = Agent.STATE_PAUSED;
+					
+					for each(var r:IReasoning in dragAgent.agent.reasoning) {
+						r.cancel();
+					}
+					
 					for each (var ep:EnvrPosition in dragAgent.agent.environment.positions) {
 						if (ep.agentHere == dragAgent.agent) {
 							ep.agentHere = null;
@@ -80,7 +86,7 @@ package mundovirtual.controller
 					state = AgentDragController.STATE_STOPPED
 					calculateNewPosition(dragAgent, position)
 					
-					dragAgent.agent.run();
+					if(!mv.paused) dragAgent.agent.run();
 					dragAgent = null;
 				}
 			}

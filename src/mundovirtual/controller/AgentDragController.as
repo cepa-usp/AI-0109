@@ -57,8 +57,8 @@ package mundovirtual.controller
 			if (this._state == AgentDragController.STATE_STOPPED) {
 				if (touch.phase == TouchPhase.BEGAN) {
 				//	trace("pegou")
-					state = AgentDragController.STATE_DRAGGING;
 					dragAgent = AgentView(Image(e.target).parent);
+					state = AgentDragController.STATE_DRAGGING;
 					dragAgent.agent.state = Agent.STATE_PAUSED;
 					
 					for each(var r:IReasoning in dragAgent.agent.reasoning) {

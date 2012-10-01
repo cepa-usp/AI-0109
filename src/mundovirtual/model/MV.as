@@ -51,6 +51,7 @@ package mundovirtual.model
 		
 		public function pause():void 
 		{
+			paused = true;
 			for each (var a:Agent in environment.agents){
 				for each(var r:IReasoning in a.reasoning) {
 					r.cancel();
@@ -65,8 +66,9 @@ package mundovirtual.model
 		
 		public function play():void 
 		{
+			paused = false;
 			for each (var a:Agent in environment.agents) MVAgent(a).createResources();
-			for each (var a:Agent in lab.agents) MVAgent(a).createResources();
+			for each (var aaa:Agent in lab.agents) MVAgent(aaa).createResources();
 			start();
 		}
 		

@@ -57,12 +57,14 @@ package mundovirtual.controller
 			if (this._state == AgentDragController.STATE_STOPPED) {
 				if (touch.phase == TouchPhase.BEGAN) {
 				//	trace("pegou")
+					/*
 					dragAgent = AgentView(Image(e.target).parent);
 					state = AgentDragController.STATE_DRAGGING;
 					dragAgent.agent.state = Agent.STATE_PAUSED;
 					
 					for each(var r:IReasoning in dragAgent.agent.reasoning) {
 						r.cancel();
+						
 					}
 					
 					for each (var ep:EnvrPosition in dragAgent.agent.environment.positions) {
@@ -76,6 +78,16 @@ package mundovirtual.controller
 					mainScene.layerDragArea.addChild(dragAgent);
 					dragAgent.x = position.x// - dragAgent.width/2;
 					dragAgent.y = position.y// - dragAgent.height/2;					
+					*/
+					state = AgentDragController.STATE_DRAGGING;
+					dragAgent = AgentView(Image(e.target).parent);
+					dragAgent.agent.state = Agent.STATE_PAUSED;
+					dragAgent.agent.environment.removeAgent(dragAgent.agent);
+					mainScene.layerDragArea.addChild(dragAgent);
+					dragAgent.x = position.x// - dragAgent.width/2;
+					dragAgent.y = position.y// - dragAgent.height/2;					
+					
+					
 				} 
 			} else if (this.state == AgentDragController.STATE_DRAGGING) {
 				if(touch.phase == TouchPhase.MOVED ){

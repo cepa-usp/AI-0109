@@ -24,9 +24,15 @@ package mundovirtual.controller
 			this.view = view;
 			model.eventDispatcher.addEventListener(AgentEvent.AGENT_REGISTERED, onAgentRegistered);
 			model.eventDispatcher.addEventListener(AgentEvent.AGENT_POSITIONED, onAgentPositioned);
+			model.eventDispatcher.addEventListener(AgentEvent.AGENT_REMOVED, onAgentRemoved);
 			
 			
 			
+		}
+		
+		private function onAgentRemoved(e:AgentEvent):void 
+		{
+			view.removeAgent(MVAgent(e.agent));
 		}
 		
 		private function onAgentRegistered(e:AgentEvent):void 

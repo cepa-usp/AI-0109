@@ -15,6 +15,7 @@ package mundovirtual.view
 		public static const AGENT_CREATED:String = "AgentCreated";
 		public static const AGENT_BEGIN_DRAG:String = "AgentBeginDrag";
 		public static const AGENT_END_DRAG:String = "AgentBeginDrag";
+		static public const AGENT_DESTROYED:String = "agentDestroyed";
 		
 		public function EnviroViewEvent(env:EnvironmentView, ag:AgentView, type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 

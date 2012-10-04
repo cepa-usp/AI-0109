@@ -4,10 +4,12 @@ package mundovirtual.view
 	import cepa.multiagent.environment.Environment;
 	import com.eclecticdesignstudio.motion.Actuate;
 	import flash.display.Bitmap;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import mundovirtual.model.MV;
 	import mundovirtual.model.MVEnvironment;
+	import mundovirtual.model.MVLab;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Touch;
@@ -26,12 +28,13 @@ package mundovirtual.view
 		private var _layerLabs:Sprite = new Sprite();
 		private var _plainStageSprite:flash.display.Sprite;
 		private var _playControl:PlayCtrl;
+		private var mv:MV;
 		
 		[Embed(source = "environmt_img2.jpg")]
 		public static var ImgMainBg:Class;
 		
-		public const LABCONTAINER_X_CLOSED:int = 670;
-		public const LABCONTAINER_X_OPENED:int = 470;
+		public const LABCONTAINER_X_CLOSED:int = 673;
+		public const LABCONTAINER_X_OPENED:int = 455;
 
 		
 		public function MainScene() 
@@ -39,6 +42,13 @@ package mundovirtual.view
 			draw();	
 			
 		}
+
+		private function onLabChanged(e:Event):void 
+		{
+			showLab(MVLab(mv.lab).visible);
+		}
+		
+
 		
 		private function onLabTabTouch(e:TouchEvent):void 
 		{
@@ -48,7 +58,9 @@ package mundovirtual.view
 			var touch:Touch = e.getTouch(stage, TouchPhase.BEGAN);
 			if (touch) {
 				var position:Point = touch.getLocation(Image(e.target));				
-				if(position.x<25) showLab(!labContainer.opened);
+				//if(position.x<25) showLab(!labContainer.opened);
+				MVLab(mv.lab).visible = !MVLab(mv.lab).visible;
+				//if(position.x<25) showLab(MVLab(mv.lab).visible);
 				
 			}
 
@@ -67,6 +79,7 @@ package mundovirtual.view
 		}
 				
 		public function createScene(mv:MV):void {
+			this.mv = mv;
 			layerLabs.name = "layerLabs";
 			layerDragArea.name = "layerDragArea";
 			addChild(layerLabs);
@@ -83,9 +96,12 @@ package mundovirtual.view
 			labContainer.x = LABCONTAINER_X_CLOSED;
 			labContainer.y = 100;
 			labContainer.addEventListener(TouchEvent.TOUCH, onLabTabTouch);
+			mv.lab.eventDispatcher.addEventListener(flash.events.Event.CHANGE, onLabChanged)
 			addChild(layerDragArea);
 			createPlayControl();
 		}
+		
+		
 		
 		private function createPlayControl():void 
 		{

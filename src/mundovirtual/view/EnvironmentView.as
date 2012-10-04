@@ -99,8 +99,8 @@ package mundovirtual.view
 			
 		}
 		
-		private function jump(av:AgentView) {
-			Actuate.tween(av, 0.2, { rotation:5 } ).ease(Linear.easeNone).onComplete(function() {
+		private function jump(av:AgentView):void {
+			Actuate.tween(av, 0.2, { rotation:5 } ).ease(Linear.easeNone).onComplete(function():void {
 				Actuate.tween(av, 0.2, { rotation:0 } ).ease(Linear.easeNone);
 			})
 		}
@@ -114,6 +114,16 @@ package mundovirtual.view
 			var tx:Texture = Texture.fromBitmap(img)
 			layerBg.addChild( new Image(tx));
 		}
+		
+		public function removeAgent(agent:MVAgent):void {
+			//Actuate.reset();
+			var av:AgentView = AgentView(agents[agent]);
+			layerAgents.removeChildAt(layerAgents.getChildIndex(av))
+			agents[agent] = null;			
+			dispatchEvent(new EnviroViewEvent(this, av, EnviroViewEvent.AGENT_DESTROYED, false));
+			av = null;
+		}
+		
 		
 		public function createAgent(agent:MVAgent):void 
 		{

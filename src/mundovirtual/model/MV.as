@@ -9,31 +9,44 @@ package mundovirtual.model
 	 */
 	public class MV 
 	{
-		
+		private var _lastAmnt:int = 0;
 		private static var _velocity:Number = 1;
 		private var _environment:MVEnvironment;
-		private var _lab:MVEnvironment;
+		private var _lab:MVLab;
 		private var _paused:Boolean = false;
 		
 		public function MV() 
 		{
 			environment = new MVEnvironment(15, 13);			
-			lab = new MVEnvironment(5, 5);
+			lab = new MVLab(5, 5);
+		}
+
+		public function showLab(val:Boolean):void {
+			lab.visible = val;
 		}
 		
-		public function createAgents():void {
-			
-			for (var i:int = 0; i < 20; i++) 	{
+		public function clear():void {
+			for (var i:int = environment.agents.length - 1; i >= 0; i-- ) {
+				var a:Agent = environment.agents[i];
+				environment.removeAgent(a);
+			}
+			for (var iii:int = lab.agents.length - 1; iii >= 0; iii-- ) {
+				var aaa:Agent = lab.agents[iii];
+				lab.removeAgent(aaa);
+			}			
+		}
+		
+		
+		public function createAgents(amnt:int):void {
+			lastAmnt = amnt;
+			for (var i:int = 0; i < amnt; i++) 	{
 				var a:MVAgent = new MVAgent().randomizeProperties();			
 				var f:Point;
 			
-				if (i < 28) {
+
 					f = environment.findFreePosition();
 					environment.addAgent(a, f.x, f.y);
-				} else {
-					f = lab.findFreePosition();
-					lab.addAgent(a, f.x, f.y);
-				}
+				
 			}
 			
 		}
@@ -82,12 +95,12 @@ package mundovirtual.model
 			_environment = value;
 		}
 		
-		public function get lab():MVEnvironment 
+		public function get lab():MVLab 
 		{
 			return _lab;
 		}
 		
-		public function set lab(value:MVEnvironment):void 
+		public function set lab(value:MVLab):void 
 		{
 			_lab = value;
 		}
@@ -110,6 +123,16 @@ package mundovirtual.model
 		public function set paused(value:Boolean):void 
 		{
 			_paused = value;
+		}
+		
+		public function get lastAmnt():int 
+		{
+			return _lastAmnt;
+		}
+		
+		public function set lastAmnt(value:int):void 
+		{
+			_lastAmnt = value;
 		}
 		
 	}

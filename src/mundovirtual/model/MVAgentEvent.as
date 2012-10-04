@@ -18,6 +18,7 @@ package mundovirtual.model
 		static public const AGENT_TRANSFORMED:String = "agentTransformed";
 		static public const SEEK_FINISHED:String = "seekFinished";
 		
+		
 		public function MVAgentEvent(agt:Agent, type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 
 			super(type, agt, bubbles, cancelable);

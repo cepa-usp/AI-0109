@@ -105,10 +105,12 @@ package mundovirtual.view
 		
 		private function createPlayControl():void 
 		{
+			
 			playControl = new PlayCtrl();
 			plainStageSprite.addChild(playControl);
 			playControl.x = 20;
 			playControl.y = 20;			
+			playControl.visible = false;
 		}
 		
 		

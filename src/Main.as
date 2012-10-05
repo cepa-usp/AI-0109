@@ -54,6 +54,20 @@ package
 			mv.start();
 		}
 		
+		public function removeStats(ai:AI):void {
+						ai.container.optionButtons.removeChild(ai.container.optionButtons.btStatistics)
+			var qtBotoes:int = ai.container.optionButtons.numChildren-1			
+			var mheight:int = -8;
+			for (var i:int = 1; i <= qtBotoes; i++) {				
+				mheight += ai.container.optionButtons.getChildAt(i).height + 6;
+				trace(mheight, ai.container.optionButtons.getChildAt(i))
+				ai.container.optionButtons.getChildAt(i).y = mheight;
+			}
+			mheight += 28
+			ai.container.optionButtons.getChildAt(0).height = mheight;
+			trace(qtBotoes, mheight)
+		}
+		
 		public function onScormFetch():void 
 		{
 			
@@ -137,7 +151,7 @@ package
 			tut.addEventListener(TutorialEvent.FIM_TUTORIAL, onTutorialEnd);
 			tut.addEventListener(TutorialEvent.BALAO_ABRIU, onBalaoAbriu);
 			
-			tut.adicionarBalao(str[0], new Point(600, 450), CaixaTexto.RIGHT, CaixaTexto.CENTER);
+			tut.adicionarBalao(str[0], new Point(680, 510), CaixaTexto.RIGHT, CaixaTexto.CENTER);
 			tut.adicionarBalao(str[1], new Point(350, 250), -1, -1);
 			tut.adicionarBalao(str[2], new Point(400, 290), CaixaTexto.RIGHT, CaixaTexto.CENTER);
 			posIniLab = mv.lab.visible;
@@ -179,7 +193,7 @@ package
 			ai.container.setInfoScreen(new InfoScreen109())
 			ai.container.removeButton("btStatistics");
 			ai.container.setMessageTextVisible(false);
-			
+			removeStats(ai);
 			
 			mv.createAgents(qtAgents);
 			mv.start();

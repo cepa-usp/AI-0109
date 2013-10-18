@@ -1,0 +1,7 @@
+h3. Testing collisions
+
+Theses files simulate the binary collision between particles. Useful for tests.
+
+* Attributes.py defines the three virtual attributes: Color, Shape and Symbol.
+* Particle.py defines how a virtual particle is represented and how two particles collide.
+* Interactions.py sets a collision test.

@@ -1,11 +1,11 @@
 class Color(object):
     import numpy as np
     
-    GREEN  = 0
+    BLUE   = 0
     ORANGE = 1
-    BLUE   = 2
+    GREEN  = 2
     RED    = 3
-    MAP = ["GREEN", "ORANGE", "BLUE", "RED"]
+    MAP = ["BLUE", "ORANGE", "GREEN", "RED"]
     TRANSFORM = np.matrix([[+1, -1],
                            [-1, +1]])
     
@@ -39,11 +39,11 @@ class Shape(object):
 class Symbol(object):
     import numpy as np
     
-    COPA   = 0
-    ESPADA = 1
-    OURO   = 2
-    PAU    = 3
-    MAP = ["COPA", "ESPADA", "OURO", "PAU"]
+    HEART   = 0
+    SPADE   = 1
+    DIAMOND = 2
+    CLUB    = 3
+    MAP = ["HEART", "SPADE", "DIAMOND", "CLUB"]
     TRANSFORM = np.matrix([[+1, -1],
                            [-1, +1]])
     

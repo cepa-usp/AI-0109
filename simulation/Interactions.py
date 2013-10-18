@@ -9,8 +9,8 @@ def pretty_print(p1in, p2in, p1out, p2out, attr = None):
     else:        
         print FORMAT.format(p1in, p2in, p1out, p2out)
     
-p1in = Particle(Color.RED, Shape.CIRCLE, Symbol.COPA)
-p2in = Particle(Color.RED, Shape.SQUARE, Symbol.ESPADA)
+p1in = Particle(Color.BLUE, Shape.CIRCLE, Symbol.HEART)
+p2in = Particle(Color.RED, Shape.SQUARE, Symbol.SPADE)
 (p1out, p2out) = p1in.collide(p2in)
 
 pretty_print(p1in, p2in, p1out, p2out)
